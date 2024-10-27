@@ -13,7 +13,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Entidades\" />
     <Folder Include="ModelFactories\" />
     <Folder Include="prueba\" />
     <Folder Include="Repos\" />
