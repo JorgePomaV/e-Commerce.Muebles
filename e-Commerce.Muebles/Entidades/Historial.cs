@@ -6,7 +6,11 @@ using System.Threading.Tasks;
 
 namespace e_Commerce.Muebles.Entidades
 {
-    internal class usu
+    public class Historial
     {
+        public int IdHistorial { get; set; }
+        public int UsuarioId { get; set; }
+        public int VentaId { get; set; }
+
     }
 }
