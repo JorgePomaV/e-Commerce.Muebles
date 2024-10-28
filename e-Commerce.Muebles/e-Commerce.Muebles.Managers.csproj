@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <Folder Include="ModelFactories\" />
-    <Folder Include="Repos\" />
   </ItemGroup>
 
 </Project>
