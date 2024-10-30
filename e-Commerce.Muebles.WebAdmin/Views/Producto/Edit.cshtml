@@ -8,30 +8,30 @@
 <h2>Editar Producto</h2>
 
 <form asp-action="Edit" method="post">
-    <input type="hidden" asp-for="IdProducto" />
+    <input type="hidden" asp-for="id_producto" />
     <div class="form-group">
         <label for="Nombre">Nombre</label>
-        <input type="text" class="form-control" asp-for="Nombre" />
+        <input type="text" class="form-control" asp-for="nombre" />
     </div>
     <div class="form-group">
         <label for="Descripcion">Descripcion</label>
-        <input type="text" class="form-control" asp-for="Descripcion" />
+        <input type="text" class="form-control" asp-for="descripcion" />
     </div>
     <div class="form-group">
         <label for="Precio">Precio</label>
-        <input type="number" class="form-control" asp-for="Precio" />
+        <input type="number" class="form-control" asp-for="precio" />
     </div>
     <div class="form-group">
         <label for="Stock">Stock</label>
-        <input type="number" class="form-control" asp-for="Stock" />
+        <input type="number" class="form-control" asp-for="stock" />
     </div>
     <div class="form-group">
         <label for="ProveedorId">Proveedor</label>
-        <input type="number" class="form-control" asp-for="ProveedorId" />
+        <input type="number" class="form-control" asp-for="proveedor_id" />
     </div>
     <div class="form-group">
         <label for="CategoriaId">Categoria</label>
-        <input type="number" class="form-control" asp-for="CategoriaId" />
+        <input type="number" class="form-control" asp-for="categoria_id" />
     </div>
     <button type="submit" class="btn btn-primary">Guardar Cambios</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>

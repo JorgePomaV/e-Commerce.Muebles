@@ -8,28 +8,28 @@
 
 <form asp-action="Create" method="post">
     <div class="form-group">
-        <label asp-for="Nombre"></label>
-        <input type="text" class="form-control" asp-for="Nombre" />
+        <label asp-for="nombre"></label>
+        <input type="text" class="form-control" asp-for="nombre" />
     </div>
     <div class="form-group">
-        <label asp-for="Descripcion"></label>
-        <input type="text" class="form-control" asp-for="Descripcion" />
+        <label asp-for="descripcion"></label>
+        <input type="text" class="form-control" asp-for="descripcion" />
     </div>
     <div class="form-group">
-        <label asp-for="Precio"></label>
-        <input type="number" class="form-control" asp-for="Precio" />
+        <label asp-for="precio"></label>
+        <input type="number" class="form-control" asp-for="precio" />
     </div>
     <div class="form-group">
-        <label asp-for="Stock"></label>
-        <input type="number" class="form-control" asp-for="Stock" />
+        <label asp-for="stock"></label>
+        <input type="number" class="form-control" asp-for="stock" />
     </div>
     <div class="form-group">
-        <label asp-for="ProveedorId"></label>
-        <input type="number" class="form-control" asp-for="ProveedorId" />
+        <label asp-for="proveedor_id"></label>
+        <input type="number" class="form-control" asp-for="proveedor_id" />
     </div>
     <div class="form-group">
-        <label asp-for="CategoriaId"></label>
-        <input type="number" class="form-control" asp-for="CategoriaId" />
+        <label asp-for="categoria_id"></label>
+        <input type="number" class="form-control" asp-for="categoria_id" />
     </div>
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a asp-action="Index" class="btn btn-secondary">Cancelar</a>
