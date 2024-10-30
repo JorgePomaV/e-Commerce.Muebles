@@ -39,12 +39,12 @@ namespace e_Commerce.Muebles.Repos
 
         public void AddProducto(Producto producto)
         {
-            _connection.Execute("INSERT INTO Producto (nombre, descripcion, precio, stock, proveedor_id, categoria_id) VALUES (@nombre, @descripcion, @precio, @stock, @proveedor_id, @categoria_id)", producto);
+            _connection.Execute("INSERT INTO Producto (nombre, descripcion, precio, stock, categoria_id) VALUES (@nombre, @descripcion, @precio, @stock, @categoria_id)", producto);
         }
 
         public void UpdateProducto(Producto producto)
         {
-            _connection.Execute("UPDATE Producto SET nombre = @nombre, descripcion = @descripcion, precio = @precio, stock = @stock, proveedor_id = @proveedor_id, categoria_id = @categoria_id WHERE id_producto = @id_producto", producto);
+            _connection.Execute("UPDATE Producto SET nombre = @nombre, descripcion = @descripcion, precio = @precio, stock = @stock, categoria_id = @categoria_id WHERE id_producto = @id_producto", producto);
         }
 
         public void DeleteProducto(int id)

@@ -17,7 +17,6 @@
             <th>Descripcion</th>
             <th>Precio</th>
             <th>Stock</th>
-            <th>Proveedor_id</th>
             <th>Categoria_id</th>
         </tr>
     </thead>
@@ -29,7 +28,6 @@
                 <td>@item.descripcion</td>
                 <td>@item.precio</td>
                 <td>@item.stock</td>
-                <td>@item.proveedor_id</td>
                 <td>@item.categoria_id</td>
                 <td>
                     <a asp-action="Edit" asp-route-id="@item.id_producto" class="btn btn-warning">Editar</a>

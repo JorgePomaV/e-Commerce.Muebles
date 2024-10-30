@@ -19,9 +19,6 @@ namespace e_Commerce.Muebles.WebAdmin.Models
         [Range(0, int.MaxValue, ErrorMessage = "El stock no puede ser negativo")]
         public int stock { get; set; }
 
-        [Required(ErrorMessage = "El proveedor es obligatorio")]
-        public int proveedor_id { get; set; }
-
         [Required(ErrorMessage = "La categoría es obligatoria")]
         public int categoria_id { get; set; }
     }
