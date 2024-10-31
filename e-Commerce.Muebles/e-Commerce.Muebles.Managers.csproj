@@ -14,6 +14,7 @@
 
   <ItemGroup>
     <Folder Include="ModelFactories\" />
+    <Folder Include="Managers\" />
   </ItemGroup>
 
 </Project>
