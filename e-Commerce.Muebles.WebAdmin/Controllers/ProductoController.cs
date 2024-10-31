@@ -8,11 +8,11 @@ using e_Commerce.Muebles.Repos;
 
 namespace e_Commerce.Muebles.WebAdmin.Controllers
 {
-    public class ProductosController : Controller
+    public class ProductoController : Controller
     {
         private readonly IProductoRepositorio _productoRepositorio;
 
-        public ProductosController(IProductoRepositorio productoRepositorio)
+        public ProductoController(IProductoRepositorio productoRepositorio)
         {
             _productoRepositorio = productoRepositorio;
         }
