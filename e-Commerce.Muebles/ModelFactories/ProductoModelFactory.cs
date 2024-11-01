@@ -9,7 +9,7 @@ namespace e_Commerce.Muebles.ModelFactories
 {
     public class ProductoCompleto
     {
-        public int IdProducto { get; set; }
+        public int id_producto { get; set; }
         public string Nombre { get; set; }
         public string Descripcion { get; set; }
         public double Precio { get; set; }
