@@ -27,7 +27,7 @@ namespace e_Commerce.Muebles.WebAdmin.Controllers
                 descripcion = p.descripcion,
                 precio = p.precio,
                 stock = p.stock,
-                categoria_id = p.categoria_id 
+                categoria_id = p.categoria_id
             }).ToList();
 
             return View(productoModels);
@@ -40,24 +40,45 @@ namespace e_Commerce.Muebles.WebAdmin.Controllers
             {
                 return NotFound();
             }
-            return View(producto);
+
+            var productoModel = new ProductoModel
+            {
+                id_producto = producto.id_producto,
+                nombre = producto.nombre,
+                descripcion = producto.descripcion,
+                precio = producto.precio,
+                stock = producto.stock,
+                categoria_id = producto.categoria_id
+            };
+
+            return View(productoModel);
         }
 
         public IActionResult Create()
         {
-            return View();
+            return View(new ProductoModel());
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Create(Producto producto)
+        public IActionResult Create(ProductoModel productoModel)
         {
             if (ModelState.IsValid)
             {
+                var producto = new Producto
+                {
+                    id_producto = productoModel.id_producto,
+                    nombre = productoModel.nombre,
+                    descripcion = productoModel.descripcion,
+                    precio = productoModel.precio,
+                    stock = productoModel.stock,
+                    categoria_id = productoModel.categoria_id
+                };
+
                 _productoRepositorio.AddProducto(producto);
                 return RedirectToAction(nameof(Index));
             }
-            return View(producto);
+            return View(productoModel);
         }
 
         public IActionResult Edit(int id)
@@ -67,24 +88,45 @@ namespace e_Commerce.Muebles.WebAdmin.Controllers
             {
                 return NotFound();
             }
-            return View(producto);
+
+            var productoModel = new ProductoModel
+            {
+                id_producto = producto.id_producto,
+                nombre = producto.nombre,
+                descripcion = producto.descripcion,
+                precio = producto.precio,
+                stock = producto.stock,
+                categoria_id = producto.categoria_id
+            };
+
+            return View(productoModel);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult Edit(int id, Producto producto)
+        public IActionResult Edit(int id, ProductoModel productoModel)
         {
-            if (id != producto.id_producto)
+            if (id != productoModel.id_producto)
             {
                 return BadRequest();
             }
 
             if (ModelState.IsValid)
             {
+                var producto = new Producto
+                {
+                    id_producto = productoModel.id_producto,
+                    nombre = productoModel.nombre,
+                    descripcion = productoModel.descripcion,
+                    precio = productoModel.precio,
+                    stock = productoModel.stock,
+                    categoria_id = productoModel.categoria_id
+                };
+
                 _productoRepositorio.UpdateProducto(producto);
                 return RedirectToAction(nameof(Index));
             }
-            return View(producto);
+            return View(productoModel);
         }
 
         public IActionResult Delete(int id)
@@ -94,7 +136,18 @@ namespace e_Commerce.Muebles.WebAdmin.Controllers
             {
                 return NotFound();
             }
-            return View(producto);
+
+            var productoModel = new ProductoModel
+            {
+                id_producto = producto.id_producto,
+                nombre = producto.nombre,
+                descripcion = producto.descripcion,
+                precio = producto.precio,
+                stock = producto.stock,
+                categoria_id = producto.categoria_id
+            };
+
+            return View(productoModel);
         }
 
         [HttpPost, ActionName("Delete")]
