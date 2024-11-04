@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using e_Commerce.Muebles.Entidades;
+using System.ComponentModel.DataAnnotations;
 
 namespace e_Commerce.Muebles.WebAdmin.Models
 {
