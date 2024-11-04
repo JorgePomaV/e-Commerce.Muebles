@@ -6,6 +6,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IProductoRepositorio>(_ => new ProductoRepos(builder.Configuration["Db:ConnectionString"]));
+builder.Services.AddScoped<ICategoriaRepository>(_ => new CategoriaRepository(builder.Configuration["Db:ConnectionString"]));
 
 var app = builder.Build();
 

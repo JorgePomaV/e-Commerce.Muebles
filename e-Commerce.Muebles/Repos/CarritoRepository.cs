@@ -14,7 +14,7 @@ namespace e_Commerce.Muebles.Repos
     {
         bool AgregarProducto(int id_producto, int id_cliente, int cantidad);
         bool EliminarProducto(int id_producto, int id_cliente);
-        IEnumerable<Carrito> GetCarrito(int id_cliente);
+        IEnumerable<Carrito> GetCarritos(int id_cliente);
         bool EditarCantidadProducto(int id_cliente, int id_procuto, int cantidad);
     }
     public class CarritoRepository : ICarritoRepository
@@ -63,7 +63,7 @@ namespace e_Commerce.Muebles.Repos
             }
         }
 
-        public IEnumerable<Carrito> GetCarrito(int id_cliente)
+        public IEnumerable<Carrito> GetCarritos(int id_cliente)
         {
             using (IDbConnection conn = new SqlConnection(_connectionString))
             {

@@ -13,6 +13,8 @@ namespace e_Commerce.Muebles.Repos
     public interface ICategoriaRepository
     {
         IEnumerable<Categoria> GetCategorias();
+        Categoria GetCategoria(int id);
+        bool BorrarCategoria(int categoriaId);
         bool agregarCategoria(Categoria categoria);
         bool editarCategoria(int id, Categoria categoria);
 
@@ -35,6 +37,16 @@ namespace e_Commerce.Muebles.Repos
             }
         }
 
+        public bool BorrarCategoria(int categoriaId)
+        {
+            using (IDbConnection conn = new SqlConnection(_ConnectionString))
+            {
+                string query = "DELETE FROM Categoria WHERE id_categoria = @categoriaId";
+                var resultado = conn.Execute(query, new { categoriaId = categoriaId });
+                return resultado == 1;
+            }
+        }
+
         public bool editarCategoria(int id, Categoria categoria)
         {
             using (IDbConnection con = new SqlConnection(_ConnectionString))
@@ -42,6 +54,15 @@ namespace e_Commerce.Muebles.Repos
                 string query = "UPDATE Categoria SET categoria = @categoria WHERE id_categoria = @Id";
                 var resultado = con.Execute(query, new { categoria = categoria.categoria, Id = id });
                 return resultado == 1;
+            }
+        }
+
+        public Categoria GetCategoria(int id)
+        {
+            using(IDbConnection con = new SqlConnection(_ConnectionString))
+            {
+                Categoria categoria = con.QuerySingle<Categoria>("SELECT * FROM Categoria WHERE id_categoria = @categoria_id", new { categoria_id = id });
+                return categoria;
             }
         }
 
