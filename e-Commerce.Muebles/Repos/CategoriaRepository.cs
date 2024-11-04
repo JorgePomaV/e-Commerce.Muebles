@@ -59,12 +59,13 @@ namespace e_Commerce.Muebles.Repos
 
         public Categoria GetCategoria(int id)
         {
-            using(IDbConnection con = new SqlConnection(_ConnectionString))
+            using (IDbConnection con = new SqlConnection(_ConnectionString))
             {
-                Categoria categoria = con.QuerySingle<Categoria>("SELECT * FROM Categoria WHERE id_categoria = @categoria_id", new { categoria_id = id });
+                Categoria categoria = con.QuerySingleOrDefault<Categoria>( "SELECT * FROM Categoria WHERE id_categoria = @categoria_id", new { categoria_id = id } );
                 return categoria;
             }
         }
+
 
         public IEnumerable<Categoria> GetCategorias()
         {
