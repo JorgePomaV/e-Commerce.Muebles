@@ -1,3 +1,5 @@
+using e_Commerce.Muebles.Repos;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -12,6 +14,15 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+void ConfigureServices(IServiceCollection services)
+{
+    // Configuración del repositorio con la cadena de conexión
+    services.AddScoped<IProductoRepositorio, ProductoRepos>(provider =>
+        new ProductoRepos("tu_cadena_de_conexion_aqui"));
+
+    services.AddControllersWithViews();  // Configuración para habilitar las vistas en MVC
+}
+
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();

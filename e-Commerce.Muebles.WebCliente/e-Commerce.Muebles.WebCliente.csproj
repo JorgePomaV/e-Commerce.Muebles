@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Dapper" Version="2.1.35" />
+  </ItemGroup>
+
+  <ItemGroup>
     <ProjectReference Include="..\e-Commerce.Muebles\e-Commerce.Muebles.Managers.csproj" />
   </ItemGroup>
 
