@@ -1,0 +1,25 @@
+﻿@model IEnumerable<e_Commerce.Muebles.Entidades.Producto>
+
+<h2>Lista de Productos</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Precio</th>
+            <th>Stock</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var producto in Model)
+        {
+            <tr>
+                <td>@producto.nombre</td>
+                <td>@producto.descripcion</td>
+                <td>@producto.precio.ToString("C")</td>
+                <td>@producto.stock</td>
+            </tr>
+        }
+    </tbody>
+</table>
