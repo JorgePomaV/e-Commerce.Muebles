@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<e_Commerce.Muebles.Entidades.Producto>
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -6,45 +8,44 @@
     <h1 class="display-4">Welcome</h1>
     <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 
-    <!-- Section-->
-    @model IEnumerable<e_Commerce.Muebles.Entidades.Producto>
-
     <section class="py-5">
         <div class="container px-4 px-lg-5 mt-5">
             <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
                 @if (Model != null && Model.Any())
                 {
-                    @foreach (var productos in Model)
+                    @foreach (var producto in Model)
                     {
-                        <div class="col mb-5">
-                            <div class="card h-100">
-                                <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Imagen del producto" />
-                                <div class="card-body p-4">
-                                    <div class="text-center">
-                                        <h5 class="fw-bolder">@productos.nombre</h5>
-                                        <p>@productos.descripcion</p>
-                                        <span class="text-muted">$@productos.precio</span>
+                                <div class="col mb-5">
+                                    <div class="card h-100">
+                                        <!-- Imagen del producto -->
+                                        <img class="card-img-top" src="https://dummyimage.com/450x300/dee2e6/6c757d.jpg" alt="Imagen del producto" />
+                                        <!-- Detalles del producto -->
+                                        <div class="card-body p-4">
+                                            <div class="text-center">
+                                                <h5 class="fw-bolder">@producto.nombre</h5>
+                                                <p>@producto.descripcion</p>
+                                                <span class="text-muted">@producto.precio.ToString("C")</span>
+                                            </div>
+                                        </div>
+                                        <!-- Botón para agregar al carrito -->
+                                        <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
+                                            <div class="text-center">
+                                                <form asp-action="AgregarProductoAlCarrito" asp-controller="Carrito" method="post">
+                                                    <input type="hidden" name="productoId" value="@producto.id_producto" />
+                                                    <input type="number" name="cantidad" value="1" min="1" class="form-control mb-2" style="width: 80px; display:inline;" />
+                                                    <button type="submit" class="btn btn-outline-dark mt-auto">Agregar al Carrito</button>
+                                                </form>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
-                                <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                    <div class="text-center">
-                                        <form asp-action="AgregarProductoAlCarrito" method="post">
-                                            <input type="hidden" name="productoId" value="@productos.id_producto" />
-                                            <input type="number" name="cantidad" value="1" min="1" class="form-control mb-2" style="width: 80px; display:inline;" />
-                                            <button type="submit" class="btn btn-outline-dark mt-auto">Agregar al Carrito</button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                     }
                 }
                 else
                 {
-                    <p>No hay productos disponibles por el momento.</p>
+                        <p class="text-center">No hay productos disponibles por el momento.</p>
                 }
             </div>
         </div>
     </section>
-
 </div>

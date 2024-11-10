@@ -1,30 +1,26 @@
 using e_Commerce.Muebles.Repos;
+using e_Commerce.Muebles.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
+// Registrar servicios
 builder.Services.AddControllersWithViews();
+
+// Registro de repositorios con la cadena de conexión
 builder.Services.AddScoped<ICarritoRepository>(_ => new CarritoRepository(builder.Configuration["Db:ConnectionString"]));
 builder.Services.AddScoped<IProductoRepositorio>(_ => new ProductoRepos(builder.Configuration["Db:ConnectionString"]));
+
+// Registro de CarritoService
+builder.Services.AddScoped<CarritoService>();
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
+// Configuración del pipeline de solicitudes HTTP
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-    // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
-
-void ConfigureServices(IServiceCollection services)
-{
-    // Configuración del repositorio con la cadena de conexión
-    services.AddScoped<IProductoRepositorio, ProductoRepos>(provider =>
-        new ProductoRepos("tu_cadena_de_conexion_aqui"));
-
-    services.AddControllersWithViews();  // Configuración para habilitar las vistas en MVC
-}
-
 
 app.UseHttpsRedirection();
 app.UseStaticFiles();
