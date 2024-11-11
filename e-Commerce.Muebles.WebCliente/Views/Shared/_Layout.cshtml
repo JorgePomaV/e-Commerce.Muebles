@@ -1,4 +1,8 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Identity
+@{
+    var userName = User.Identity.Name; // Obtiene el nombre de la identidad
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -34,6 +38,25 @@
                             <span class="badge bg-dark text-white ms-1 rounded-pill">0</span>
                         </button>
                     </form>
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <p class="userName">@userName</p>
+                    }
+                    else
+                    {
+                        <p>Bienvenido, invitado. Inicia sesión para continuar.</p>
+                    }
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        <form asp-controller="Login" asp-action="Logout" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-danger">Cerrar Sesion</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <a asp-controller="Login" asp-action="Index" class="btn btn-primary">Iniciar Sesion</a>
+                    }
+
                 </div>
             </div>
         </nav>
