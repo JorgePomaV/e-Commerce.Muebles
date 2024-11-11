@@ -32,9 +32,9 @@
                 @Html.DisplayFor(modelItem => item.categoria)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { /*id = item.id_categoria*/ }, new { @class = "btn btn-warning" }) |
-                @Html.ActionLink("Details", "Details", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-info" }) |
-                @Html.ActionLink("Delete", "Delete", new { /* id=item.PrimaryKey */ }, new { @class = "btn btn-danger" })
+                @Html.ActionLink("Edit", "Edit", new { id = item.id_categoria }, new { @class = "btn btn-warning" }) |
+                @Html.ActionLink("Details", "Details", new {  id=item.id_categoria  }, new { @class = "btn btn-info" }) |
+                @Html.ActionLink("Delete", "Delete", new {  id=item.id_categoria  }, new { @class = "btn btn-danger" })
             </td>
         </tr>
 }

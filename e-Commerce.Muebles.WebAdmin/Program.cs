@@ -7,7 +7,7 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddScoped<IProductoRepositorio>(_ => new ProductoRepos(builder.Configuration["Db:ConnectionString"]));
 builder.Services.AddScoped<ICategoriaRepository>(_ => new CategoriaRepository(builder.Configuration["Db:ConnectionString"]));
-
+builder.Services.AddScoped<IUserRepositorio>(_ => new UserRepos(builder.Configuration["Db:ConnectionString"]));
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

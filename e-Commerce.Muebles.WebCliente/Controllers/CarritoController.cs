@@ -31,7 +31,10 @@ namespace e_Commerce.Muebles.WebCliente.Controllers
 
         private int ObtenerClienteId()
         {
-            return 1; 
+         var identity =   HttpContext.User.Identity;
+
+            var idUsuario = HttpContext.User.Claims.First(x => x.Type == "ClienteEcommerce").Value;
+            return int.Parse(idUsuario); 
         }
     }
 }

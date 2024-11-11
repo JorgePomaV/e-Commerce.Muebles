@@ -40,7 +40,7 @@ namespace e_Commerce.Muebles.WebAdmin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(Usuario usuario)
+        /*public ActionResult Create(Usuario usuario)
         {
             try
             {
@@ -84,7 +84,7 @@ namespace e_Commerce.Muebles.WebAdmin.Controllers
                 ModelState.AddModelError("", "Error al actualizar el usuario: " + ex.Message);
             }
             return View(usuario);
-        }
+        }*/
 
         public ActionResult Delete(int id)
         {
