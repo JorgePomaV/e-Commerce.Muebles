@@ -8,14 +8,10 @@ namespace e_Commerce.Muebles.Entidades
 {
     public class Usuario
     {
-        public int IdUsuario { get; set; }
+        public int id_usuario { get; set; }
         public string Nombre { get; set; }
         public string Apellido { get; set; }
         public string Telefono { get; set; }
-        public enum TipoUsuario
-        {
-            Admin = 1,
-            Cliente = 2
-        }
+        public string tipo_usuario { get; set; }
     }
 }

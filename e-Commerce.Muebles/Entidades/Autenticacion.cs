@@ -8,10 +8,11 @@ namespace e_Commerce.Muebles.Entidades
 {
     public class Autenticacion
     {
-        public int IdAtenticacion { get; set; }
+        public int id_autenticacion { get; set; }
         public string Email { get; set; }
-        public String Clave { get; set; }
-        public int UsuarioId { get; set; }
+        public string Clave { get; set; }
+        public string GoogleIdentificador { get; set; }
+        public int usuario_id { get; set; }
 
     }
 }

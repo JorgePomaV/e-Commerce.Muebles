@@ -13,9 +13,10 @@ namespace e_Commerce.Muebles.Repos
     {
         IEnumerable<Usuario> GetAllUsuarios();
         Usuario GetUsuarioById(int id);
-        void AddUsuario(Usuario usuario);
+        public int AddUsuario(Usuario usuario, Autenticacion autenticacion);
         void UpdateUsuario(Usuario usuario);
         void DeleteUsuario(int id);
+        public Usuario? GetUsuarioPorGoogleSubject(string googleSubject);
     }
 
     public class UserRepos : IUserRepositorio
@@ -37,10 +38,17 @@ namespace e_Commerce.Muebles.Repos
             return _connection.QuerySingleOrDefault<Usuario>("SELECT * FROM Usuario WHERE IdUsuario = @Id", new { Id = id });
         }
 
-        public void AddUsuario(Usuario usuario)
+        public int AddUsuario(Usuario usuario, Autenticacion autenticacion)
         {
-            _connection.Execute("INSERT INTO Usuario (Nombre, Apellido, Telefono) VALUES (@Nombre, @Apellido, @Telefono)", usuario);
+            //se agregan datos manualmente por que las tabla no aceptan null
+            usuario.Telefono = "11111111";
+            autenticacion.Clave = "12345";
+            int resultado = _connection.QuerySingle<int>("INSERT INTO Usuario (Nombre, Apellido, Telefono, tipo_usuario) VALUES (@Nombre, @Apellido, @Telefono, @tipo_usuario); SELECT SCOPE_IDENTITY();", usuario);
+            autenticacion.usuario_id = resultado;
+            _connection.Execute("INSERT INTO Autenticacion (Email, Clave, usuario_id, GoogleIdentificador) VALUES (@Email, @Clave, @usuario_id, @GoogleIdentificador)", autenticacion);
+            return resultado;
         }
+
 
         public void UpdateUsuario(Usuario usuario)
         {
@@ -50,6 +58,13 @@ namespace e_Commerce.Muebles.Repos
         public void DeleteUsuario(int id)
         {
             _connection.Execute("DELETE FROM Usuario WHERE IdUsuario = @Id", new { Id = id });
+        }
+        public Usuario? GetUsuarioPorGoogleSubject(string googleSubject)
+        {
+            Usuario usuarios = _connection.Query<Usuario>("SELECT u.* FROM Usuario u INNER JOIN Autenticacion a ON u.id_usuario = a.usuario_id WHERE a.GoogleIdentificador = '" + googleSubject.ToString() + "'").FirstOrDefault();
+
+            return usuarios;
+
         }
     }
 }
