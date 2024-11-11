@@ -1,5 +1,5 @@
 using e_Commerce.Muebles.WebCliente.Models;
-using e_Commerce.Muebles.Entidades;  // Asegúrate de importar el espacio de nombres donde está Producto
+using e_Commerce.Muebles.Entidades;
 using e_Commerce.Muebles.Repos;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -11,7 +11,7 @@ namespace e_Commerce.Muebles.WebCliente.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        private readonly IProductoRepositorio _productoRepos;  // Inyecta el servicio o repositorio de productos
+        private readonly IProductoRepositorio _productoRepos; 
 
         public HomeController(ILogger<HomeController> logger, IProductoRepositorio productoService)
         {
@@ -21,10 +21,8 @@ namespace e_Commerce.Muebles.WebCliente.Controllers
 
         public IActionResult Index()
         {
-            // Obtén la lista de productos usando el servicio o repositorio
             IEnumerable<Producto> productos = _productoRepos.GetAllProductos();
 
-            // Pasa la lista de productos a la vista
             return View(productos);
         }
 
