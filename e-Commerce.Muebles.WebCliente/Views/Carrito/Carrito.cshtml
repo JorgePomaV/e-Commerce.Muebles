@@ -1,0 +1,24 @@
+﻿@model IEnumerable<e_Commerce.Muebles.Entidades.Carrito>
+
+<h3>Detalles del Carrito</h3>
+<table class="table">
+    <thead>
+        <tr>
+            <th>Producto</th>
+            <th>Cantidad</th>
+            <th>Precio</th>
+            <th>Total</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in ViewBag.DetallesCarrito)
+        {
+            <tr>
+                <td>@item.Producto.Nombre</td>
+                <td>@item.cantidad</td>
+                <td>@item.Producto.Precio.ToString("C")</td>
+                <td>@(item.cantidad * item.Producto.Precio).ToString("C")</td>
+            </tr>
+        }
+    </tbody>
+</table>
