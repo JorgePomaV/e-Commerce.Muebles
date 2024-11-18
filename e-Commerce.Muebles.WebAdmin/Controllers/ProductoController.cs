@@ -4,16 +4,19 @@ using System.Collections.Generic;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 using e_Commerce.Muebles.Repos;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace e_Commerce.Muebles.WebAdmin.Controllers
 {
     public class ProductoController : Controller
     {
         private readonly IProductoRepositorio _productoRepositorio;
+        private readonly ICategoriaRepository _categoriaRepository;
 
-        public ProductoController(IProductoRepositorio productoRepositorio)
+        public ProductoController(IProductoRepositorio productoRepositorio, ICategoriaRepository categoriaRepository )
         {
             _productoRepositorio = productoRepositorio;
+            _categoriaRepository = categoriaRepository;
         }
 
         public IActionResult Index()
@@ -56,7 +59,16 @@ namespace e_Commerce.Muebles.WebAdmin.Controllers
 
         public IActionResult Create()
         {
-            return View(new ProductoModel());
+            ProductoModel productoModel = new ProductoModel();
+            productoModel.ListaCategoriasItem = new List<SelectListItem>();
+            var categorias = _categoriaRepository.GetCategorias();
+            
+            foreach ( var categoria in categorias)
+            {
+                productoModel.ListaCategoriasItem.Add(new SelectListItem { Value = categoria.id_categoria.ToString(), Text = categoria.categoria });
+            }
+
+            return View(productoModel);
         }
 
         [HttpPost]

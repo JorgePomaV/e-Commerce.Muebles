@@ -1,4 +1,5 @@
 ﻿using e_Commerce.Muebles.Entidades;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.ComponentModel.DataAnnotations;
 
 namespace e_Commerce.Muebles.WebAdmin.Models
@@ -22,5 +23,7 @@ namespace e_Commerce.Muebles.WebAdmin.Models
 
         [Required(ErrorMessage = "La categoría es obligatoria")]
         public int categoria_id { get; set; }
+
+        public List<SelectListItem>? ListaCategoriasItem { get; set; }
     }
 }
