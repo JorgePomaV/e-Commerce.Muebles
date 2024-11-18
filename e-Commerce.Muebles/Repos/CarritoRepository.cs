@@ -20,6 +20,10 @@ namespace e_Commerce.Muebles.Repos
         public IEnumerable<CarritoCompleto> GetCarritosCompleto(int id_cliente);
         public bool AgregarProductoAlCarrito(int clienteId, int productoId, int cantidad);
         public bool RestarCantidadProducto(int productoId, int cantidadArestar);
+        public int RegistrarVenta(int usuarioId, decimal monto, string estado);
+        public bool RegistrarHistorialVenta(int ventaId, int productoId, int cantidad);
+        public bool VaciarCarrito(int id_cliente);
+        public bool FinalizarCompra (int id_cliente);
     }
     public class CarritoRepository : ICarritoRepository
     {
@@ -147,5 +151,68 @@ namespace e_Commerce.Muebles.Repos
                 return resultado > 0; // Si se actualizó el producto correctamente
             }
         }
+        public int RegistrarVenta(int usuarioId, decimal monto, string estado)
+        {
+            using (IDbConnection conn = new SqlConnection(_connectionString))
+            {
+                string query = "INSERT INTO Venta (usuario_id, fecha, monto, estado) OUTPUT INSERTED.id_venta VALUES (@UsuarioId, GETDATE(), @Monto, @Estado)";
+                var idVenta = conn.Query<int>(query, new { UsuarioId = usuarioId, Monto = monto, Estado = estado }).Single();
+                return idVenta;
+            }
+        }
+        public bool RegistrarHistorialVenta(int ventaId, int productoId, int cantidad)
+        {
+            using (IDbConnection conn = new SqlConnection(_connectionString))
+            {
+                string query = "INSERT INTO Historial (venta_id, producto_id, cantidad) VALUES (@VentaId, @ProductoId, @Cantidad)";
+                var resultado = conn.Execute(query, new { VentaId = ventaId, ProductoId = productoId, Cantidad = cantidad});
+                return resultado > 0;
+            }
+        }
+        public bool VaciarCarrito(int clienteId)
+        {
+            using (IDbConnection conn = new SqlConnection(_connectionString))
+            {
+                string query = "DELETE FROM CARRITO WHERE cliente_id = @ClienteId";
+                var resultado = conn.Execute(query, new { ClienteId = clienteId });
+                return resultado > 0; // Retorna true si se eliminaron los elementos del carrito
+            }
+        }
+
+
+
+        public bool FinalizarCompra(int clienteId)
+        {
+            try
+            {
+                using (IDbConnection conn = new SqlConnection(_connectionString))
+                {
+                    conn.Open();
+                    using (var transaction = conn.BeginTransaction())
+                    {
+                        // Mover los productos del carrito al historial de compras
+                        string queryHistorial = @"
+                    INSERT INTO Historial (cliente_id, producto_id, cantidad, fecha)
+                    SELECT cliente_id, producto_id, cantidad, GETDATE()
+                    FROM Carrito
+                    WHERE cliente_id = @ClienteId";
+                        conn.Execute(queryHistorial, new { ClienteId = clienteId }, transaction);
+
+                        // Vaciar el carrito
+                        string queryVaciarCarrito = "DELETE FROM Carrito WHERE cliente_id = @ClienteId";
+                        conn.Execute(queryVaciarCarrito, new { ClienteId = clienteId }, transaction);
+
+                        // Confirmar la transacción
+                        transaction.Commit();
+                        return true;
+                    }
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
     }
 }

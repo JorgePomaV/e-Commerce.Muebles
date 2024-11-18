@@ -49,4 +49,23 @@ public class CarritoController : Controller
         return RedirectToAction("Carrito");
     }
 
+    [HttpPost]
+    public IActionResult Comprar()
+    {
+        int clienteId = ObtenerClienteId();
+
+        bool exito = _ICarritoRepository.FinalizarCompra(clienteId);
+
+        if (exito)
+        {
+            _ICarritoRepository.VaciarCarrito(clienteId);
+
+            TempData["Mensaje"] = "¡Compra realizada con éxito!";
+
+            // Redirigir al carrito
+            return RedirectToAction("Carrito");
+        }
+    }
+
+
 }
