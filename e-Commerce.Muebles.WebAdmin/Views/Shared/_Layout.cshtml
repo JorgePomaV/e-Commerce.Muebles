@@ -10,6 +10,8 @@
     <link rel="canonical" href="https://getbootstrap.com/docs/5.0/examples/headers/">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.5.0/font/bootstrap-icons.min.css">
 
+    <link href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" rel="stylesheet" />
+
 </head>
 <body>
     <!-- <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">e_Commerce.Muebles.WebAdmin</a>
@@ -68,5 +70,15 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
+
+    <script>
+        let table = new DataTable('#myTable');
+    </script>
+
 </body>
 </html>

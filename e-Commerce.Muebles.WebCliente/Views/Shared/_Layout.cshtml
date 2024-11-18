@@ -13,6 +13,8 @@
     <link rel="stylesheet" href="~/e_Commerce.Muebles.WebCliente.styles.css" asp-append-version="true" />
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.css" />
+
+    <link href="//cdn.datatables.net/2.1.8/css/dataTables.dataTables.min.css" rel="stylesheet" />
 </head>
 <body>
         <!-- Navigation-->
@@ -32,7 +34,7 @@
                             </a>
                         </li>
                     </ul>
-                    <form class="d-flex bg-white" action="@Url.Action("Carrito", "Carrito")" method="get">
+                <form class="d-flex bg-white" action="@Url.Action("Carrito", "Carrito")" method="get">
                         <button class="btn btn-outline-dark" type="submit">
                             <i class="bi-cart-fill me-1"></i>
                             Carrito
@@ -128,6 +130,15 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mdb-ui-kit/6.0.0/mdb.min.js"></script>
 
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"
+            integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo="
+            crossorigin="anonymous"></script>
+    <script src="//cdn.datatables.net/2.1.8/js/dataTables.min.js"></script>
     @await RenderSectionAsync("Scripts", required: false)
+
+    <script>
+        let table = new DataTable('#myTable');
+    </script>
+
 </body>
 </html>
