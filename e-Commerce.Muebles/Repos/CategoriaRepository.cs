@@ -31,7 +31,7 @@ namespace e_Commerce.Muebles.Repos
         {
             using (IDbConnection conn = new SqlConnection(_ConnectionString))
             {
-                string query = "INSERT INTO Categoria (id_categoria, categoria) VALUES (@id_categoria, @categoria)";
+                string query = "INSERT INTO Categoria (categoria) VALUES (@categoria)";
                 var resultado = conn.Execute(query, categoria);
                 return resultado == 1;
             }
