@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Dapper;
+using e_Commerce.Muebles.ModelFactories;
 
 namespace e_Commerce.Muebles.Repos
 {
@@ -16,6 +17,9 @@ namespace e_Commerce.Muebles.Repos
         bool EliminarProducto(int id_producto, int id_cliente);
         IEnumerable<Carrito> GetCarritos(int id_cliente);
         bool EditarCantidadProducto(int id_cliente, int id_procuto, int cantidad);
+        public IEnumerable<CarritoCompleto> GetCarritosCompleto(int id_cliente);
+        public bool AgregarProductoAlCarrito(int clienteId, int productoId, int cantidad);
+        public bool RestarCantidadProducto(int productoId, int cantidadArestar);
     }
     public class CarritoRepository : ICarritoRepository
     {
@@ -69,6 +73,78 @@ namespace e_Commerce.Muebles.Repos
             {
                 IEnumerable<Carrito> carritos = conn.Query<Carrito>("SELECT * FROM CARRITO WHERE cliente_id = @Id_cliente", new { Id_cliente = id_cliente }).ToList();
                 return carritos;
+            }
+        }
+
+        public IEnumerable<CarritoCompleto> GetCarritosCompleto(int id_cliente)
+        {
+            using (IDbConnection conn = new SqlConnection(_connectionString))
+            {
+                string sql = @"
+                                SELECT 
+                                    c.id_carrito, c.cantidad, c.producto_id, c.cliente_id,
+                                    p.id_producto, p.nombre, p.precio
+                                FROM Carrito c
+                                INNER JOIN Producto p ON c.producto_id = p.id_producto
+                                WHERE c.cliente_id = @ClienteId";
+
+                IEnumerable<CarritoCompleto> carritosConProducto = conn.Query<CarritoCompleto, Producto, CarritoCompleto>(
+                    sql,
+                    (carrito, producto) =>
+                    {
+                        carrito.producto = producto; // Asignamos el producto al carrito
+                        return carrito;
+                    },
+                    new { ClienteId = id_cliente }, // Parámetro para la consulta
+                    splitOn: "id_producto" // Indica que los datos del producto comienzan a partir de "id_producto"
+                ).ToList();
+                return carritosConProducto;
+
+            }
+        }
+
+        public bool AgregarProductoAlCarrito(int clienteId, int productoId, int cantidad)
+        {
+            // Verificamos si el producto ya existe en el carrito
+            var carritos = this.GetCarritos(clienteId);
+            var carritoItem = carritos?.FirstOrDefault(c => c.producto_id == productoId);
+
+            if (carritoItem != null)
+            {
+                // Si ya existe, aumentamos la cantidad
+                int nuevaCantidad = carritoItem.cantidad + cantidad;
+                return this.EditarCantidadProducto(clienteId, productoId, nuevaCantidad);
+            }
+            else
+            {
+                // Si no existe, lo agregamos
+                return this.AgregarProducto(productoId, clienteId, cantidad);
+            }
+        }
+
+        public bool RestarCantidadProducto(int productoId, int cantidadArestar)
+        {
+            using (IDbConnection dbConnection = new SqlConnection(_connectionString))
+            {
+
+                // Obtenemos la cantidad actual del producto
+                var producto = dbConnection.QueryFirstOrDefault<Producto>("SELECT * FROM Producto WHERE id_producto = @Id", new { Id = productoId });
+
+                if (producto == null)
+                {
+                    return false; // Producto no encontrado
+                }
+
+                if (producto.stock < cantidadArestar)
+                {
+                    return false; // No hay suficiente inventario
+                }
+
+                // Restamos la cantidad del producto en inventario
+                string query = "UPDATE Producto SET stock = stock - @Cantidad WHERE id_producto = @Id";
+                var resultado = dbConnection.Execute(query, new { Cantidad = cantidadArestar, Id = productoId });
+
+                return resultado > 0; // Si se actualizó el producto correctamente
             }
         }
     }

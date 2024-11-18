@@ -1,4 +1,5 @@
 ﻿using e_Commerce.Muebles.Entidades;
+using e_Commerce.Muebles.ModelFactories;
 using e_Commerce.Muebles.Repos;
 using System.Collections.Generic;
 
@@ -45,6 +46,11 @@ namespace e_Commerce.Muebles.Services
         public IEnumerable<Carrito> ObtenerCarritoDeCliente(int clienteId)
         {
             return _carritoRepository.GetCarritos(clienteId);
+        }
+
+        public IEnumerable<CarritoCompleto> GetCarritosCompleto(int id_cliente)
+        {
+            return _carritoRepository.GetCarritosCompleto(id_cliente);
         }
     }
 }

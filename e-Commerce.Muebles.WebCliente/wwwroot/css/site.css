@@ -68,3 +68,7 @@ footer {
     margin: 20px;
     color: white;
 }
+
+.no-background .image-container {
+    display: none; /* Esto oculta la imagen de fondo */
+}

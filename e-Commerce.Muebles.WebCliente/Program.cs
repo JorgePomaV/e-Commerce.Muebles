@@ -85,7 +85,6 @@ builder.Services.AddScoped<ICarritoRepository>(_ => new CarritoRepository(builde
 builder.Services.AddScoped<IProductoRepositorio>(_ => new ProductoRepos(builder.Configuration["Db:ConnectionString"]));
 builder.Services.AddScoped<IUserRepositorio>(_ => new UserRepos(builder.Configuration["Db:ConnectionString"]));
 
-builder.Services.AddScoped<CarritoService>();
 
 var app = builder.Build();
 

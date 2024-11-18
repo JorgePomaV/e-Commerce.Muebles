@@ -1,25 +1,27 @@
-﻿using e_Commerce.Muebles.Services;
+﻿using e_Commerce.Muebles.ModelFactories;
+using e_Commerce.Muebles.Repos;
+using e_Commerce.Muebles.Services;
 using Microsoft.AspNetCore.Mvc;
 
 public class CarritoController : Controller
 {
-    private readonly CarritoService _carritoService;
+    private readonly ICarritoRepository _ICarritoRepository;
 
-    public CarritoController(CarritoService carritoService)
+    public CarritoController(ICarritoRepository carritoService)
     {
-        _carritoService = carritoService;
+        _ICarritoRepository = carritoService;
     }
 
     public IActionResult Carrito()
     {
         // Lógica para obtener los productos del carrito
-        var carrito = _carritoService.ObtenerCarritoDeCliente(ObtenerClienteId());
+        IEnumerable<CarritoCompleto> carrito = _ICarritoRepository.GetCarritosCompleto(ObtenerClienteId());
         var cantidadTotal = carrito.Sum(item => item.cantidad);
 
         ViewBag.CantidadTotal = cantidadTotal;
         ViewBag.DetallesCarrito = carrito;
 
-        return View("Carrito"); // Nombre de la vista
+        return View(carrito); // Nombre de la vista
     }
 
     private int ObtenerClienteId()
@@ -28,4 +30,23 @@ public class CarritoController : Controller
         var idUsuario = HttpContext.User.Claims.First(x => x.Type == "ClienteEcommerce").Value;
         return int.Parse(idUsuario);
     }
+
+    [HttpPost]
+    public IActionResult AgregarProductoAlCarrito(int productoId, int cantidad)
+    {
+        int clienteId = ObtenerClienteId();
+
+        bool resultado = _ICarritoRepository.RestarCantidadProducto(productoId, cantidad);
+
+        if (!resultado)
+        {
+            TempData["Error"] = "No hay suficiente inventario para agregar al carrito.";
+            return RedirectToAction("Index", "Productos");
+        }
+
+        bool resultadoArgegar = _ICarritoRepository.AgregarProductoAlCarrito(clienteId,productoId, cantidad);
+
+        return RedirectToAction("Carrito");
+    }
+
 }

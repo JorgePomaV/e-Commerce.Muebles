@@ -1,6 +1,12 @@
-﻿@model IEnumerable<e_Commerce.Muebles.Entidades.Carrito>
+﻿@model IEnumerable<e_Commerce.Muebles.ModelFactories.CarritoCompleto>
 
-<h3>Detalles del Carrito</h3>
+@{
+    ViewData["Title"] = "Carrito";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<h1>Carrito</h1>
 <table class="table">
     <thead>
         <tr>
@@ -8,16 +14,17 @@
             <th>Cantidad</th>
             <th>Precio</th>
             <th>Total</th>
+            <th></th>
         </tr>
     </thead>
     <tbody>
-        @foreach (var item in ViewBag.DetallesCarrito)
+        @foreach (var item in Model)
         {
             <tr>
-                <td>@item.Producto.Nombre</td>
+                <td>@item.producto.nombre</td>
                 <td>@item.cantidad</td>
-                <td>@item.Producto.Precio.ToString("C")</td>
-                <td>@(item.cantidad * item.Producto.Precio).ToString("C")</td>
+                <td>@item.producto.precio.ToString("C")</td>
+                <td>@((item.cantidad * item.producto.precio).ToString("C2"))</td>
             </tr>
         }
     </tbody>
