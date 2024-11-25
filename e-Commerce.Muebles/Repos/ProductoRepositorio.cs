@@ -49,8 +49,12 @@ namespace e_Commerce.Muebles.Repos
 
         public void DeleteProducto(int id)
         {
+          
+            _connection.Execute("DELETE FROM Carrito WHERE producto_id = @Id", new { Id = id });
+
             _connection.Execute("DELETE FROM Producto WHERE id_producto = @Id", new { Id = id });
         }
+
     }
 
 }

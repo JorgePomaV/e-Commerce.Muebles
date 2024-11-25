@@ -14,7 +14,7 @@ namespace e_Commerce.Muebles.WebAdmin.Models
         [StringLength(250, ErrorMessage = "La descripción no puede exceder de 250 caracteres")]
         public string descripcion { get; set; }
 
-        [Range(0.01, 100000.00, ErrorMessage = "El precio debe estar entre 0.01 y 10000.00")]
+        [Range(0.01, 1000000.00, ErrorMessage = "El precio debe estar entre 0.01 y 1000000.00")]
         public double precio { get; set; }
 
         [Range(0, int.MaxValue, ErrorMessage = "El stock no puede ser negativo")]
